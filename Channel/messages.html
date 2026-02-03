@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝐇𝐀𝐂𝐊 [𝐏𝐔𝐑𝐆𝐀𝐓𝐎𝐑𝐘]™ - Canal Telegram</title>
+    <meta name="description" content="Channel - 𝐇𝐀𝐂𝐊 [𝐏𝐔𝐑𝐆𝐀𝐓𝐎𝐑𝐘]™">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hackpurgatory.es/data/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: #000;
+        }
+        
+        header {
+            background-color: rgba(0,0,0,0.5);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #fff;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        header img {
+            max-width: 80px;
+        }
+        
+        .header-text {
+            flex: 1 1 200px;
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+            min-height: 2.5rem;
+        }
+        
+        .typing-container {
+            display: inline-block;
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            color: #ff3333;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% {opacity: 1;}
+            50% {opacity: 0;}
+        }
+        
+        header p {
+            font-size: 1rem;
+            color: #ddd;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+        
+        nav {
+            background-color: rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 1rem;
+            z-index: 1000;
+        }
+        
+        .menu-toggle div {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        
+        .menu-toggle.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px,5px);
+        }
+        
+        .menu-toggle.active div:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(5px,-5px);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            transition: max-height 0.3s;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem;
+            display: block;
+            transition: color 0.3s, background 0.3s, transform 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: #fff;
+            color: #000;
+            border-radius: 5px;
+            transform: translateY(-2px);
+        }
+        
+        main {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 3rem auto;
+            background-color: rgba(0,0,0,0.65);
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ff3333;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            color: #ff3333;
+        }
+        
+        .telegram-container {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255,51,51,0.1);
+            border: 1px solid #ff3333;
+            border-radius: 10px;
+        }
+        
+        iframe {
+            width: 100%;
+            max-width: 500px;
+            height: 600px;
+            border: none;
+            margin: 20px 0;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(255,51,51,0.3);
+        }
+        
+        .navigation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .nav-button {
+            text-decoration: none;
+            color: #fff;
+            background-color: #111;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #ff3333;
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+        
+        .nav-button:hover {
+            background-color: #ff3333;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,51,51,0.5);
+        }
+        
+        .icon-svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s;
+        }
+        
+        .nav-button:hover .icon-svg {
+            filter: brightness(0) invert(0);
+        }
+        
+        .post-counter {
+            margin: 1.5rem 0;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+        
+        .post-counter span {
+            color: #ff3333;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid #fff;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        .channel-info {
+            background: rgba(255,51,51,0.1);
+            border: 1px solid #ff3333;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem auto;
+            max-width: 600px;
+        }
+        
+        .channel-info h3 {
+            color: #ff3333;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            
+            html, body {
+                overflow-x: hidden;
+                width: 100%;
+                position: relative;
+            }
+            
+            main {
+                padding: 1rem;
+                margin: 1rem auto;
+                width: calc(100% - 1rem);
+                max-width: 100%;
+                overflow: hidden;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                right: 15px;
+                top: 15px;
+            }
+            
+            nav {
+                padding-top: 50px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                max-height: 0;
+                overflow: hidden;
+                background-color: rgba(0,0,0,0.95);
+                position: absolute;
+                width: 100%;
+                top: 70px;
+                left: 0;
+                z-index: 999;
+                padding: 0;
+            }
+            
+            nav ul.show {
+                max-height: 500px;
+                padding-bottom: 10px;
+            }
+            
+            nav ul li {
+                margin: 0;
+                text-align: center;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                width: 100%;
+            }
+            
+            nav ul li a {
+                padding: 15px 10px;
+                font-size: 1rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            header {
+                justify-content: center;
+                text-align: center;
+                padding: 70px 15px 15px;
+                flex-direction: column;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            header img {
+                max-width: 60px;
+                margin-bottom: 10px;
+            }
+            
+            header h1 {
+                font-size: 1.4rem;
+                margin-bottom: 0.3rem;
+                word-wrap: break-word;
+                padding: 0 10px;
+            }
+            
+            header p {
+                font-size: 0.9rem;
+                padding: 0 10px;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+                display: block;
+                text-align: center;
+                margin: 0 auto 1rem;
+                padding: 0 15px;
+                word-wrap: break-word;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            iframe {
+                height: 500px;
+                max-width: 100%;
+            }
+            
+            .telegram-container {
+                padding: 1rem;
+            }
+            
+            .navigation-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+                padding: 1rem;
+            }
+            
+            .channel-info {
+                padding: 0.8rem;
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.2rem;
+                padding: 0 5px;
+            }
+            
+            iframe {
+                height: 400px;
+            }
+            
+            .nav-button {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .post-counter {
+                font-size: 1rem;
+            }
+            
+            p, h1, h2, h3, h4, span, a, div {
+                overflow-wrap: break-word !important;
+                word-wrap: break-word !important;
+                word-break: break-word !important;
+                hyphens: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="https://hackpurgatory.es/data/logo.png" alt="Logo de la Comunidad">
+    <div class="header-text">
+        <h1 id="typing-title"></h1>
+        <p>Bienvenido a Nuestra Comunidad.</p>
+    </div>
+</header>
+
+<nav>
+    <div class="menu-toggle" id="menu-toggle">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <ul id="menu">
+	  <li><a href="https://hackpurgatory.es">Sobre Nosotros</a></li>
+	  <li><a href="https://hackpurgatory.es">Información</a></li>
+  	  <li><a href="https://hackpurgatory.es">Canales</a></li>
+  	  <li><a href="https://t.me/HackPurgatory">Reportar</a></li>
+  	  <li><a href="https://hackpurgatory.es">Free RDP/VPS</a></li>
+  	  <li><a href="https://hackpurgatory.es">Estadisticas</a></li>
+  	  <li><a href="https://hackpurgatory.es/Channel/messages.html">Recursos</a></li>
+	  <li><a href="https://hackpurgatory.es/Exposed/Exposed.html">Expuestos</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h2>𝐇𝐀𝐂𝐊 [𝐏𝐔𝐑𝐆𝐀𝐓𝐎𝐑𝐘]™</h2>
+    
+    <div class="channel-info">
+        <h3>𝐇𝐀𝐂𝐊 [𝐏𝐔𝐑𝐆𝐀𝐓𝐎𝐑𝐘]™</h3>
+        <p>Explora los mensajes del canal utilizando los controles de navegación</p>
+    </div>
+    
+    <div class="telegram-container">
+        <iframe id="tgFrame"></iframe>
+        
+        <div class="navigation-controls">
+            <button class="nav-button" onclick="goFirst()">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"/>
+                </svg>
+                ⏮ Primero
+            </button>
+            <button class="nav-button" onclick="goPrev()">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+                ◀ Atrás
+            </button>
+            <button class="nav-button" onclick="goNext()">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+                ▶ Adelante
+            </button>
+            <button class="nav-button" onclick="goLast()">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6v12h2V6z"/>
+                </svg>
+                ⏭ Último
+            </button>
+        </div>
+        
+        <div class="post-counter">
+            <p>Post actual: <span id="postNumber"></span></p>
+            <p>Total de posts: <span id="totalPosts"></span></p>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 𝐇𝐀𝐂𝐊 [𝐏𝐔𝐑𝐆𝐀𝐓𝐎𝐑𝐘]™ 2025. Todos los derechos reservados.
+</footer>
+
+<script>
+    function startTypingAnimation() {
+        const typingTitle = document.getElementById('typing-title');
+        const titleText = '𝐇𝐀𝐂𝐊 [𝐏𝐔𝐑𝐆𝐀𝐓𝐎𝐑𝐘]™';
+        let charIndex = 0;
+        
+        function typeWriter() {
+            if (charIndex < titleText.length) {
+                typingTitle.innerHTML = titleText.substring(0, charIndex + 1) + '<span class="typing-cursor">|</span>';
+                charIndex++;
+                setTimeout(typeWriter, 100);
+            } else {
+                typingTitle.innerHTML = titleText;
+            }
+        }
+        
+        typeWriter();
+    }
+    
+    window.addEventListener("load", () => {
+        setTimeout(startTypingAnimation, 300);
+    });
+    
+    const channel = "onlywebchannel";
+    const firstPost = 2;
+    const lastPost = 1790; 
+
+    let currentPost = firstPost;
+
+    const frame = document.getElementById("tgFrame");
+    const postNumber = document.getElementById("postNumber");
+    const totalPosts = document.getElementById("totalPosts");
+
+    function loadPost() {
+        frame.src = `https://t.me/${channel}/${currentPost}?embed=1`;
+        postNumber.textContent = currentPost;
+        totalPosts.textContent = lastPost;
+    }
+
+    function goFirst() {
+        currentPost = firstPost;
+        loadPost();
+    }
+
+    function goLast() {
+        currentPost = lastPost;
+        loadPost();
+    }
+
+    function goNext() {
+        if (currentPost < lastPost) {
+            currentPost++;
+            loadPost();
+        }
+    }
+
+    function goPrev() {
+        if (currentPost > firstPost) {
+            currentPost--;
+            loadPost();
+        }
+    }
+
+        loadPost();
+    
+    
+    document.addEventListener('keydown', function(event) {
+        switch(event.key) {
+            case 'ArrowLeft':
+                goPrev();
+                break;
+            case 'ArrowRight':
+                goNext();
+                break;
+            case 'Home':
+                goFirst();
+                break;
+            case 'End':
+                goLast();
+                break;
+        }
+    });
+</script>
+
+<script>
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    toggle.addEventListener('click', () => {
+        menu.classList.toggle('show');
+        toggle.classList.toggle('active');
+    });
+</script>
+
+</body>
+</html>
