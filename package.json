@@ -15,7 +15,9 @@
     "uuid": "^11.1.0",
     "sharp": "^0.33.0",
     "formidable": "^3.5.2",
-    "jose": "^6.0.0"
+    "jose": "^6.0.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
