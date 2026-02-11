@@ -57,21 +57,9 @@ export default function ContenidoPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background relative">
-      {/* Background grid effect */}
-      <div className="fixed inset-0 opacity-[0.03] pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(0,255,204,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,204,0.3) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-      </div>
-
+    <div className="min-h-screen relative">
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-card/80 backdrop-blur-md border-b border-border">
+      <header className="sticky top-0 z-30 backdrop-blur-md border-b border-border" style={{ backgroundColor: "rgba(0,0,0,0.6)" }}>
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
           <a href="/" className="flex items-center gap-3 shrink-0">
             <img
@@ -101,7 +89,7 @@ export default function ContenidoPage() {
       </header>
 
       {/* Hero */}
-      <section className="relative border-b border-border">
+      <section className="relative border-b border-border" style={{ backgroundColor: "rgba(0,0,0,0.4)" }}>
         <div className="max-w-4xl mx-auto px-4 py-12 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3 text-balance">
             Contenido y Noticias
@@ -114,7 +102,7 @@ export default function ContenidoPage() {
       </section>
 
       {/* Filters */}
-      <div className="sticky top-[73px] z-20 bg-background/80 backdrop-blur-md border-b border-border">
+      <div className="sticky top-[73px] z-20 backdrop-blur-md border-b border-border" style={{ backgroundColor: "rgba(0,0,0,0.6)" }}>
         <div className="max-w-4xl mx-auto px-4 py-3 flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
