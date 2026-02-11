@@ -93,7 +93,7 @@ export default function ContenidoPage() {
 
           <a
             href="/"
-            className="text-sm text-muted-foreground hover:text-primary transition-colors hidden sm:block"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             Inicio
           </a>
@@ -198,7 +198,7 @@ export default function ContenidoPage() {
       {/* Footer */}
       <footer className="border-t border-border py-6 text-center text-muted-foreground text-sm">
         <div className="max-w-4xl mx-auto px-4">
-          {"HACK [PURGATORY] 2025. Todos los derechos reservados."}
+          {"HACK [PURGATORY] 2026. Todos los derechos reservados."}
         </div>
       </footer>
     </div>
