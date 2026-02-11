@@ -117,7 +117,7 @@ export default function FileUploader({ files, onChange }: FileUploaderProps) {
           onChange={(e) => {
             if (e.target.files) handleUpload(e.target.files);
           }}
-          accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.txt,.zip,.rar"
+          accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.txt,.zip,.rar,.7z,.tar,.gz,.apk,.exe,.msi,.dmg,.iso,.bin,.dat,.json,.xml,.csv,.xls,.xlsx,.ppt,.pptx,.jar,.py,.js,.sh,.bat"
         />
 
         {uploading ? (
@@ -137,7 +137,7 @@ export default function FileUploader({ files, onChange }: FileUploaderProps) {
                 Arrastra archivos aqui o haz clic para seleccionar
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                Imagenes, audio, video, documentos, ZIP, RAR...
+                Imagenes, audio, video, documentos, APK, ZIP, RAR, ISO...
               </p>
             </div>
           </div>

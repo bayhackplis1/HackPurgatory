@@ -34,7 +34,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           <p className="text-muted-foreground text-sm">Cargando...</p>
@@ -46,7 +46,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <AdminSidebar
         user={user}
         onLogout={handleLogout}
@@ -57,7 +57,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       {/* Main content */}
       <div className="lg:ml-64 min-h-screen">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 bg-card/80 backdrop-blur-md border-b border-border px-4 lg:px-6 py-3 flex items-center gap-4">
+        <header className="sticky top-0 z-30 backdrop-blur-md border-b border-border px-4 lg:px-6 py-3 flex items-center gap-4" style={{ backgroundColor: "rgba(0,0,0,0.6)" }}>
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden text-muted-foreground hover:text-foreground"

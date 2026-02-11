@@ -169,6 +169,142 @@ export function getFileType(
   return "other";
 }
 
+// --- Site Settings ---
+export interface SiteSettings {
+  about: {
+    title: string;
+    features: { title: string; description: string }[];
+  };
+  info: {
+    title: string;
+    description: string;
+  };
+  channels: {
+    title: string;
+    description: string;
+    links: { name: string; url: string; platform: string }[];
+  };
+  report: {
+    title: string;
+    description: string;
+    buttonText: string;
+    buttonUrl: string;
+    subtitle: string;
+  };
+  rdpvps: {
+    title: string;
+    description: string;
+    links: { name: string; url: string; icon: string }[];
+  };
+  stats: {
+    items: { label: string; value: number }[];
+  };
+  gallery: {
+    title: string;
+    images: { url: string; alt: string }[];
+  };
+  downloads: {
+    title: string;
+    description: string;
+    files: { name: string; description: string; url: string; type: string }[];
+  };
+}
+
+const SETTINGS_FILE = path.join(DATA_DIR, "settings.json");
+
+function getDefaultSettings(): SiteSettings {
+  return {
+    about: {
+      title: "Sobre Nosotros",
+      features: [
+        {
+          title: "Objetivo Principal",
+          description:
+            "Nuestro objetivo principal es hacer libre todo el conocimiento posible de internet y luchar contra las organizaciones ilegales dentro de ellas que promueven actos ilegales, ventas ilegales, contenido inapropiado, toxicidad y mas. Nos ocupamos de hacer que esos grupos no se expandan o lleguen a mas.",
+        },
+        {
+          title: "Recursos Libres",
+          description:
+            "Creemos en el conocimiento libre, nuestro fundador oficial RIP Network creo esta hermosa comunidad para que todos los nuevos y curiosos puedan avanzar de forma segura y libre. Todos los recursos dentro de nuestra comunidad son totalmente gratuitos y libres.",
+        },
+        {
+          title: "Nuestra Filosofia",
+          description:
+            "Somos una comunidad firme y con reglas para que podamos tener un orden dentro de nosotros. El aceleracionismo es nuestra filosofia: creemos que debemos acelerar todo para que internet pueda encontrar una nueva era que prospere correctamente sin ningun tipo estafa o toxicidad.",
+        },
+      ],
+    },
+    info: {
+      title: "Informacion",
+      description:
+        "Esta comunidad se dedica unicamente a la investigacion, el aprendizaje libre y la lucha contra estafas y ventas ilegales en internet. No promovemos actividades ilegales ni lucrativas. Nuestro objetivo es eliminar, exponer y compartir conocimientos de forma etica.",
+    },
+    channels: {
+      title: "Canales",
+      description:
+        "Si deseas unirte, accede a nuestros canales oficiales para aprender y conocer a nueva gente dentro de nuestra comunidad.",
+      links: [
+        { name: "Telegram", url: "https://t.me/HackPurgatory", platform: "telegram" },
+        { name: "Discord", url: "https://discord.gg/xhKHkCW3YG", platform: "discord" },
+        {
+          name: "Session",
+          url: "https://raw.githubusercontent.com/TheOrder403/hackpurgatory/refs/heads/main/data/Session.txt",
+          platform: "session",
+        },
+      ],
+    },
+    report: {
+      title: "Reporta Actividad Sospechosa",
+      description:
+        "Aqui podras reportar cualquier tipo de actividad sospechosa para que La Unidad de la comunidad pueda interactuar y decidir.",
+      buttonText: "Enviar Solicitud",
+      buttonUrl: "https://t.me/+mKHXo0blI5xmM2Zh",
+      subtitle: "Reporta, Sirve y Protege.",
+    },
+    rdpvps: {
+      title: "Nuestras RDP/VPS Gratuitas Limitadas",
+      description:
+        "Necesitas una RDP o VPS de forma temporal o limitada para tus trabajos o mejorar tu OPSEC? HackPurgatory te ayuda ofreciendote servicios gratuitos.",
+      links: [
+        { name: "RDP Windows 11", url: "https://app.apponfly.com/trial", icon: "server" },
+        { name: "VPS Linux", url: "https://colab.research.google.com", icon: "terminal" },
+        { name: "Android Stable", url: "https://www.myandroid.org/playonline/androidemulator.php", icon: "smartphone" },
+      ],
+    },
+    stats: {
+      items: [
+        { label: "Grupos/Canales Cerrados", value: 126 },
+        { label: "Personas Expuestas", value: 56 },
+        { label: "Webs Eliminadas", value: 52 },
+      ],
+    },
+    gallery: {
+      title: "Nuestra Comunidad",
+      images: [
+        { url: "https://raw.githubusercontent.com/TheOrder403/hackpurgatory/refs/heads/main/data/album1.jpg", alt: "Ciberseguridad" },
+        { url: "https://raw.githubusercontent.com/TheOrder403/hackpurgatory/refs/heads/main/data/album2.jpg", alt: "Tecnologia" },
+        { url: "https://raw.githubusercontent.com/TheOrder403/hackpurgatory/refs/heads/main/data/album3.jpg", alt: "Redes" },
+        { url: "https://raw.githubusercontent.com/TheOrder403/hackpurgatory/refs/heads/main/data/album4.jpg", alt: "Codificacion" },
+        { url: "https://raw.githubusercontent.com/TheOrder403/hackpurgatory/refs/heads/main/data/album5.jpg", alt: "Hacking Etico" },
+        { url: "https://raw.githubusercontent.com/TheOrder403/hackpurgatory/refs/heads/main/data/album6.jpg", alt: "Comunidad" },
+      ],
+    },
+    downloads: {
+      title: "Descargas",
+      description: "Descarga nuestras herramientas y aplicaciones.",
+      files: [],
+    },
+  };
+}
+
+export function getSettings(): SiteSettings {
+  return readJsonFile<SiteSettings>(SETTINGS_FILE, getDefaultSettings());
+}
+
+export function saveSettings(settings: SiteSettings) {
+  writeJsonFile(SETTINGS_FILE, settings);
+}
+
 // --- Sessions ---
 export interface Session {
   token: string;

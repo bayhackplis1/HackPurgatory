@@ -14,6 +14,15 @@ const navItems = [
     ),
   },
   {
+    name: "Editar Secciones",
+    href: "/admin/sections",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>
+    ),
+  },
+  {
     name: "Contenido",
     href: "/admin/content",
     icon: (
@@ -28,6 +37,15 @@ const navItems = [
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+      </svg>
+    ),
+  },
+  {
+    name: "Archivos",
+    href: "/admin/files",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
       </svg>
     ),
   },
@@ -68,9 +86,10 @@ export default function AdminSidebar({
       )}
 
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-card border-r border-border z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed top-0 left-0 h-full w-64 border-r border-border z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 backdrop-blur-xl ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
+        style={{ backgroundColor: "rgba(0,0,0,0.8)" }}
       >
         {/* Header */}
         <div className="p-6 border-b border-border flex items-center gap-3">
@@ -138,7 +157,7 @@ export default function AdminSidebar({
 
           <div className="flex gap-2">
             <a
-              href="/contenido"
+              href="/"
               className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-accent text-muted-foreground text-xs font-medium hover:text-foreground transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

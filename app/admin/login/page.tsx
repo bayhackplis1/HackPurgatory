@@ -37,18 +37,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
-      {/* Animated background grid */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(0,255,204,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,204,0.1) 1px, transparent 1px)",
-            backgroundSize: "50px 50px",
-          }}
-        />
-      </div>
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
 
       <div className="relative w-full max-w-md mx-4">
         {/* Logo */}
@@ -70,10 +59,11 @@ export default function AdminLoginPage() {
         {/* Login form */}
         <form
           onSubmit={handleLogin}
-          className="bg-card border border-border rounded-xl p-8 backdrop-blur-sm animate-fade-in"
+          className="border border-border rounded-xl p-8 backdrop-blur-xl animate-fade-in"
           style={{
             animationDelay: "0.2s",
             boxShadow: "0 0 40px rgba(0,255,204,0.05)",
+            backgroundColor: "rgba(0,0,0,0.7)",
           }}
         >
           <div className="mb-6">
