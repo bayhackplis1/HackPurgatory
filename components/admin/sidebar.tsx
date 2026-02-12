@@ -64,6 +64,7 @@ interface AdminSidebarProps {
   user: { username: string; role: string } | null;
   onLogout: () => void;
   mobileOpen: boolean;
+  desktopOpen: boolean;
   onClose: () => void;
 }
 
@@ -71,13 +72,14 @@ export default function AdminSidebar({
   user,
   onLogout,
   mobileOpen,
+  desktopOpen,
   onClose,
 }: AdminSidebarProps) {
   const pathname = usePathname();
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Overlay - mobile only */}
       {mobileOpen && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
@@ -86,9 +88,14 @@ export default function AdminSidebar({
       )}
 
       <aside
-        className={`fixed top-0 left-0 h-full w-64 z-50 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 backdrop-blur-xl bg-black/60 border-r border-white/10 ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 left-0 h-full w-64 z-50 flex flex-col transition-transform duration-300 ease-in-out backdrop-blur-xl bg-black/60 border-r border-white/10 ${
+          mobileOpen ? "translate-x-0" : "lg:hidden max-lg:-translate-x-full"
+        } ${desktopOpen ? "lg:translate-x-0 lg:block" : "lg:-translate-x-full"} ${
+          !mobileOpen && !desktopOpen ? "-translate-x-full" : ""
         }`}
+        style={{
+          transform: mobileOpen || desktopOpen ? "translateX(0)" : "translateX(-100%)",
+        }}
       >
         {/* Logo header */}
         <div className="px-5 py-4 border-b border-white/10 flex items-center gap-3">
@@ -105,7 +112,7 @@ export default function AdminSidebar({
           </div>
           <button
             onClick={onClose}
-            className="lg:hidden w-7 h-7 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors"
+            className="w-7 h-7 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

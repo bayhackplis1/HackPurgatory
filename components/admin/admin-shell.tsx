@@ -14,6 +14,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -50,22 +51,34 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="min-h-screen flex">
-      {/* Sidebar - fixed on desktop, sliding on mobile */}
+      {/* Sidebar - collapsible on all screens */}
       <AdminSidebar
         user={user}
         onLogout={handleLogout}
         mobileOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
+        desktopOpen={desktopSidebarOpen}
+        onClose={() => {
+          setSidebarOpen(false);
+          setDesktopSidebarOpen(false);
+        }}
       />
 
-      {/* Main content - properly offset on desktop */}
-      <div className="flex-1 lg:ml-64 min-h-screen flex flex-col">
+      {/* Main content - offset when desktop sidebar is open */}
+      <div className={`flex-1 min-h-screen flex flex-col transition-[margin] duration-300 ease-in-out ${desktopSidebarOpen ? "lg:ml-64" : "lg:ml-0"}`}>
         {/* Top bar */}
         <header className="sticky top-0 z-30 backdrop-blur-xl bg-black/40 border-b border-white/10 px-4 lg:px-6 py-3 flex items-center gap-4">
-          {/* Mobile hamburger */}
+          {/* Menu toggle - visible on mobile always, on desktop when sidebar is closed */}
           <button
-            onClick={() => setSidebarOpen(true)}
-            className="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all"
+            onClick={() => {
+              // On mobile, open mobile sidebar
+              if (window.innerWidth < 1024) {
+                setSidebarOpen(true);
+              } else {
+                // On desktop, toggle desktop sidebar
+                setDesktopSidebarOpen(true);
+              }
+            }}
+            className={`flex items-center justify-center w-9 h-9 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all ${desktopSidebarOpen ? "lg:hidden" : ""}`}
             aria-label="Abrir menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
