@@ -34,13 +34,13 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="relative">
-            <div className="w-12 h-12 border-2 border-border rounded-full" />
-            <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin absolute inset-0" />
+            <div className="w-12 h-12 border-2 border-white/10 rounded-full" />
+            <div className="w-12 h-12 border-2 border-[#00ffcc] border-t-transparent rounded-full animate-spin absolute inset-0" />
           </div>
-          <p className="text-muted-foreground text-sm">Cargando panel...</p>
+          <p className="text-white/50 text-sm">Cargando panel...</p>
         </div>
       </div>
     );
@@ -49,8 +49,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Sidebar */}
+    <div className="min-h-screen flex">
+      {/* Sidebar - fixed on desktop, sliding on mobile */}
       <AdminSidebar
         user={user}
         onLogout={handleLogout}
@@ -58,14 +58,14 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         onClose={() => setSidebarOpen(false)}
       />
 
-      {/* Main content area - offset by sidebar width on lg+ */}
-      <div className="lg:pl-72 min-h-screen flex flex-col">
+      {/* Main content - properly offset on desktop */}
+      <div className="flex-1 lg:ml-64 min-h-screen flex flex-col">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 border-b border-border/60 px-5 lg:px-8 py-4 flex items-center gap-4 backdrop-blur-xl bg-background/80">
-          {/* Mobile menu button */}
+        <header className="sticky top-0 z-30 backdrop-blur-xl bg-black/40 border-b border-white/10 px-4 lg:px-6 py-3 flex items-center gap-4">
+          {/* Mobile hamburger */}
           <button
             onClick={() => setSidebarOpen(true)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all"
+            className="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all"
             aria-label="Abrir menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,27 +73,26 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             </svg>
           </button>
 
-          {/* Spacer */}
           <div className="flex-1" />
 
           {/* User info */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex flex-col items-end">
-              <span className="text-sm font-medium text-foreground leading-tight">
+              <span className="text-sm font-medium text-white leading-tight">
                 {user.username}
               </span>
-              <span className="text-xs text-primary capitalize leading-tight">
+              <span className="text-[11px] text-[#00ffcc]/80 capitalize leading-tight">
                 {user.role === "admin" ? "Administrador" : "Editor"}
               </span>
             </div>
-            <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-sm">
+            <div className="w-8 h-8 rounded-lg bg-[#00ffcc]/10 border border-[#00ffcc]/20 flex items-center justify-center text-[#00ffcc] font-bold text-xs">
               {user.username.charAt(0).toUpperCase()}
             </div>
           </div>
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-5 lg:p-8">{children}</main>
+        <main className="flex-1 p-4 lg:p-6">{children}</main>
       </div>
     </div>
   );
