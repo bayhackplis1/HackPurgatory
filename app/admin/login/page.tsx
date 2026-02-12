@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
         {/* Logo */}
         <div className="text-center mb-8 animate-fade-in">
           <img
-            src="https://hackpurgatory.org/data/logo.png"
+            src="/data/logo.png"
             alt="HACK PURGATORY"
             className="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-primary"
             style={{ boxShadow: "0 0 30px rgba(0,255,204,0.3)" }}

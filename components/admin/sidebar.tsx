@@ -94,7 +94,7 @@ export default function AdminSidebar({
         {/* Header */}
         <div className="p-6 border-b border-border flex items-center gap-3">
           <img
-            src="https://hackpurgatory.org/data/logo.png"
+            src="/data/logo.png"
             alt="Logo"
             className="w-10 h-10 rounded-full border border-primary"
           />
