@@ -6,15 +6,15 @@ export const metadata: Metadata = {
   description:
     "HACK [PURGATORY] es una comunidad creada por RIP Network, libre, dedicada a la ciberseguridad, la educacion abierta y la lucha contra estafas y toxicidad en internet. Unete y aprende con nosotros.",
   icons: {
-    icon: "https://hackpurgatory.org/data/logo.png",
-    apple: "https://hackpurgatory.org/data/logo.png",
+    icon: "/data/logo.png",
+    apple: "/data/logo.png",
   },
   openGraph: {
     title: "HACK [PURGATORY]",
     description:
       "Comunidad libre dedicada a la ciberseguridad y la educacion abierta.",
-    images: ["https://hackpurgatory.org/data/logo.png"],
-    url: "https://hackpurgatory.org",
+    images: ["/data/logo.png"],
+    url: "/",
     type: "website",
   },
   twitter: {
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "HACK [PURGATORY]",
     description:
       "Comunidad libre dedicada a la ciberseguridad y la educacion abierta.",
-    images: ["https://hackpurgatory.org/data/logo.png"],
+    images: ["/data/logo.png"],
   },
 };
 
