@@ -63,32 +63,12 @@ export default function FileUploader({ files, onChange }: FileUploaderProps) {
     return (bytes / 1048576).toFixed(1) + " MB";
   }
 
-  function getFileIcon(type: string) {
+  function getFileLabel(type: string) {
     switch (type) {
-      case "image":
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-        );
-      case "audio":
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-          </svg>
-        );
-      case "video":
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-        );
-      default:
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-          </svg>
-        );
+      case "image": return "IMG";
+      case "audio": return "AUD";
+      case "video": return "VID";
+      default: return "BIN";
     }
   }
 
@@ -103,10 +83,10 @@ export default function FileUploader({ files, onChange }: FileUploaderProps) {
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
-        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
+        className={`border border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
           dragOver
-            ? "border-primary bg-primary/5"
-            : "border-border hover:border-primary/40 hover:bg-accent/50"
+            ? "border-[#00ffcc]/30 bg-[#00ffcc]/[0.03]"
+            : "border-white/[0.08] hover:border-[#00ffcc]/20 hover:bg-white/[0.015]"
         } ${uploading ? "opacity-50 pointer-events-none" : ""}`}
       >
         <input
@@ -122,22 +102,25 @@ export default function FileUploader({ files, onChange }: FileUploaderProps) {
 
         {uploading ? (
           <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            <p className="text-sm text-primary">Subiendo archivos...</p>
+            <div className="relative w-10 h-10">
+              <div className="absolute inset-0 border border-[#00ffcc]/20 rounded-full" />
+              <div className="absolute inset-0 border-2 border-[#00ffcc] border-t-transparent rounded-full animate-spin" />
+            </div>
+            <p className="text-sm text-[#00ffcc]/60 font-mono">Subiendo...</p>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-3">
-            <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            <div className="w-12 h-12 rounded-xl bg-[#00ffcc]/[0.05] border border-[#00ffcc]/12 flex items-center justify-center text-[#00ffcc]/30">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground">
-                Arrastra archivos aqui o haz clic para seleccionar
+              <p className="text-sm font-medium text-white/50">
+                Arrastra archivos o haz clic
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Imagenes, audio, video, documentos, APK, ZIP, RAR, ISO...
+              <p className="text-[11px] text-white/20 mt-1 font-mono">
+                IMG, AUD, VID, DOC, APK, ZIP, ISO...
               </p>
             </div>
           </div>
@@ -150,34 +133,34 @@ export default function FileUploader({ files, onChange }: FileUploaderProps) {
           {files.map((file) => (
             <div
               key={file.id}
-              className="flex items-center gap-3 bg-accent/50 border border-border rounded-lg p-3 group"
+              className="flex items-center gap-3 bg-white/[0.02] border border-white/[0.05] rounded-lg p-3 group"
             >
               {file.type === "image" ? (
                 <img
                   src={file.path}
                   alt={file.originalName}
-                  className="w-10 h-10 rounded-lg object-cover border border-border"
+                  className="w-10 h-10 rounded-lg object-cover border border-white/[0.06]"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-                  {getFileIcon(file.type)}
+                <div className="w-10 h-10 rounded-lg bg-[#00ffcc]/[0.05] border border-[#00ffcc]/10 flex items-center justify-center text-[#00ffcc]/40 font-mono text-[10px] font-bold">
+                  {getFileLabel(file.type)}
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-foreground truncate">
+                <p className="text-sm text-white/60 truncate">
                   {file.originalName}
                 </p>
-                <p className="text-xs text-muted-foreground">
-                  {formatSize(file.size)} - {file.type}
+                <p className="text-[10px] text-white/20 font-mono">
+                  {formatSize(file.size)}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => removeFile(file.id)}
-                className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors opacity-0 group-hover:opacity-100"
+                className="p-1.5 rounded-lg text-white/15 hover:text-[#ff4444] hover:bg-[#ff4444]/[0.05] transition-all opacity-0 group-hover:opacity-100"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>

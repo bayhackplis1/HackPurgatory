@@ -23,12 +23,12 @@ function getFileTypeLabel(type: string, mime: string, name: string) {
   if (name.endsWith(".apk")) return "APK";
   if (name.endsWith(".exe")) return "EXE";
   if (name.endsWith(".iso")) return "ISO";
-  if (name.endsWith(".zip") || name.endsWith(".rar") || name.endsWith(".7z") || name.endsWith(".tar") || name.endsWith(".gz")) return "Archivo";
-  if (type === "image") return "Imagen";
-  if (type === "audio") return "Audio";
-  if (type === "video") return "Video";
-  if (type === "document") return "Documento";
-  return "Otro";
+  if (name.endsWith(".zip") || name.endsWith(".rar") || name.endsWith(".7z") || name.endsWith(".tar") || name.endsWith(".gz")) return "ZIP";
+  if (type === "image") return "IMG";
+  if (type === "audio") return "AUD";
+  if (type === "video") return "VID";
+  if (type === "document") return "DOC";
+  return "BIN";
 }
 
 export default function FilesPage() {
@@ -88,19 +88,12 @@ export default function FilesPage() {
 
   return (
     <AdminShell>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {toast && (
-          <div className="fixed top-4 right-4 z-50 bg-success/10 border border-success/30 text-success px-5 py-3 rounded-lg text-sm font-medium animate-notification backdrop-blur-sm">
-            {toast}
+          <div className="fixed top-4 right-4 z-50 bg-[#00ffcc]/8 border border-[#00ffcc]/20 text-[#00ffcc] px-5 py-3 rounded-lg text-xs font-mono font-medium animate-notification backdrop-blur-sm">
+            {"[OK] "}{toast}
           </div>
         )}
-
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground">Gestor de Archivos</h1>
-          <p className="text-muted-foreground text-sm">
-            Sube archivos (APK, ZIP, imagenes, documentos, etc.) y copia las URLs para usarlas en descargas
-          </p>
-        </div>
 
         {/* Upload zone */}
         <div
@@ -108,12 +101,13 @@ export default function FilesPage() {
           onDragLeave={() => setDragOver(false)}
           onDrop={handleDrop}
           onClick={() => inputRef.current?.click()}
-          className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all mb-6 ${
+          className={`cyber-border rounded-xl p-10 text-center cursor-pointer transition-all mb-6 relative overflow-hidden ${
             dragOver
-              ? "border-primary bg-primary/5"
-              : "border-border hover:border-primary/40 hover:bg-accent/50"
+              ? "border-[#00ffcc]/30 bg-[#00ffcc]/[0.03]"
+              : "hover:border-[#00ffcc]/20 hover:bg-white/[0.015]"
           } ${uploading ? "opacity-50 pointer-events-none" : ""}`}
         >
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00ffcc]/20 to-transparent" />
           <input
             ref={inputRef}
             type="file"
@@ -126,20 +120,23 @@ export default function FilesPage() {
           />
           {uploading ? (
             <div className="flex flex-col items-center gap-3">
-              <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-              <p className="text-sm text-primary">Subiendo archivos...</p>
+              <div className="relative w-12 h-12">
+                <div className="absolute inset-0 border border-[#00ffcc]/20 rounded-full" />
+                <div className="absolute inset-0 border-2 border-[#00ffcc] border-t-transparent rounded-full animate-spin" />
+              </div>
+              <p className="text-sm text-[#00ffcc]/70 font-mono">Subiendo archivos...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-3">
-              <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+              <div className="w-16 h-16 rounded-xl bg-[#00ffcc]/[0.05] border border-[#00ffcc]/15 flex items-center justify-center text-[#00ffcc]/30">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                 </svg>
               </div>
               <div>
-                <p className="text-foreground font-medium">Arrastra archivos aqui o haz clic para seleccionar</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  APK, ZIP, RAR, ISO, imagenes, audio, video, documentos y mas
+                <p className="text-white/60 font-medium text-sm">Arrastra archivos o haz clic para seleccionar</p>
+                <p className="text-[11px] text-white/20 mt-1 font-mono">
+                  APK, ZIP, RAR, ISO, IMG, AUD, VID, DOC, BIN...
                 </p>
               </div>
             </div>
@@ -148,83 +145,82 @@ export default function FilesPage() {
 
         {/* Uploaded files */}
         {files.length > 0 && (
-          <div className="bg-card border border-border rounded-xl overflow-hidden">
-            <div className="p-4 border-b border-border">
-              <h2 className="font-semibold text-foreground text-sm">
-                Archivos subidos ({files.length})
+          <div className="admin-glass cyber-border rounded-xl overflow-hidden">
+            <div className="px-5 py-3.5 border-b border-[#00ffcc]/8 flex items-center gap-2.5">
+              <div className="w-1.5 h-4 rounded-full bg-[#00ffcc]/30" />
+              <h2 className="font-semibold text-white/80 text-sm">
+                Archivos subidos
               </h2>
+              <span className="text-[10px] text-white/20 font-mono ml-auto">
+                {files.length} archivo{files.length !== 1 ? "s" : ""}
+              </span>
             </div>
-            <div className="divide-y divide-border">
+            <div className="divide-y divide-white/[0.04]">
               {files.map((file) => (
                 <div
                   key={file.id}
-                  className="p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 hover:bg-accent/30 transition-colors"
+                  className="px-5 py-3.5 flex flex-col sm:flex-row items-start sm:items-center gap-3 hover:bg-[#00ffcc]/[0.015] transition-colors group"
                 >
                   {file.type === "image" ? (
                     <img
                       src={file.path}
                       alt={file.originalName}
-                      className="w-12 h-12 rounded-lg object-cover border border-border shrink-0"
+                      className="w-11 h-11 rounded-lg object-cover border border-white/[0.06] shrink-0"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                      </svg>
+                    <div className="w-11 h-11 rounded-lg bg-[#00ffcc]/[0.05] border border-[#00ffcc]/12 flex items-center justify-center text-[#00ffcc]/40 shrink-0 font-mono text-[10px] font-bold">
+                      {getFileTypeLabel(file.type, file.mimeType, file.originalName)}
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">{file.originalName}</p>
+                    <p className="text-sm font-medium text-white/70 truncate">{file.originalName}</p>
                     <div className="flex items-center gap-3 mt-0.5">
-                      <span className="text-xs text-muted-foreground">{formatSize(file.size)}</span>
-                      <span className="text-xs bg-accent text-muted-foreground px-2 py-0.5 rounded-full">
-                        {getFileTypeLabel(file.type, file.mimeType, file.originalName)}
-                      </span>
+                      <span className="text-[10px] text-white/20 font-mono">{formatSize(file.size)}</span>
+                      <span className="text-[10px] text-white/10 font-mono truncate">{file.path}</span>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1 font-mono truncate">{file.path}</p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={() => copyUrl(file.path)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-mono font-medium transition-all ${
                         copied === file.path
-                          ? "bg-success/10 text-success border border-success/20"
-                          : "bg-accent text-muted-foreground hover:text-foreground border border-border"
+                          ? "bg-[#00ffcc]/8 text-[#00ffcc] border border-[#00ffcc]/20"
+                          : "bg-white/[0.03] text-white/30 hover:text-white/60 border border-white/[0.06]"
                       }`}
                     >
                       {copied === file.path ? (
                         <>
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
-                          Copiado
+                          copiado
                         </>
                       ) : (
                         <>
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                           </svg>
-                          Copiar URL
+                          copiar_url
                         </>
                       )}
                     </button>
                     <a
                       href={file.path}
                       download={file.originalName}
-                      className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      className="p-1.5 rounded-lg text-white/20 hover:text-[#00ffcc]/60 hover:bg-[#00ffcc]/[0.05] transition-all"
                       title="Descargar"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
                     </a>
                     <button
                       onClick={() => removeFile(file.id)}
-                      className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-                      title="Quitar de la lista"
+                      className="p-1.5 rounded-lg text-white/20 hover:text-[#ff4444] hover:bg-[#ff4444]/[0.05] transition-all opacity-0 group-hover:opacity-100"
+                      title="Quitar"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
                   </div>

@@ -96,56 +96,56 @@ export default function ContentForm({ initial, mode }: ContentFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-4xl">
+    <form onSubmit={handleSubmit} className="max-w-5xl">
       {/* Toast */}
       {toast && (
-        <div className="fixed top-4 right-4 z-50 bg-[#00ffcc]/10 border border-[#00ffcc]/30 text-[#00ffcc] px-5 py-3 rounded-lg text-sm font-medium animate-notification backdrop-blur-md">
-          {toast}
+        <div className="fixed top-4 right-4 z-50 bg-[#00ffcc]/8 border border-[#00ffcc]/20 text-[#00ffcc] px-5 py-3 rounded-lg text-xs font-mono font-medium animate-notification backdrop-blur-md">
+          {"[OK] "}{toast}
         </div>
       )}
 
       <div className="grid lg:grid-cols-3 gap-4">
         {/* Main content */}
         <div className="lg:col-span-2 flex flex-col gap-4">
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-5">
+          <div className="admin-glass cyber-border rounded-xl p-5">
             <label
               htmlFor="title"
-              className="block text-xs font-medium text-white/50 mb-2"
+              className="block text-[10px] font-mono text-white/30 mb-2 uppercase tracking-wider"
             >
-              Titulo
+              {"// titulo"}
             </label>
             <input
               id="title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-[#00ffcc]/40 transition-colors text-lg"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-white/80 placeholder-white/15 focus:outline-none focus:border-[#00ffcc]/25 focus:bg-white/[0.05] transition-all text-lg"
               placeholder="Titulo de la publicacion"
               required
             />
           </div>
 
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-5">
+          <div className="admin-glass cyber-border rounded-xl p-5">
             <label
               htmlFor="description"
-              className="block text-xs font-medium text-white/50 mb-2"
+              className="block text-[10px] font-mono text-white/30 mb-2 uppercase tracking-wider"
             >
-              Contenido
+              {"// contenido"}
             </label>
             <textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={10}
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-[#00ffcc]/40 transition-colors resize-y"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-white/80 placeholder-white/15 focus:outline-none focus:border-[#00ffcc]/25 focus:bg-white/[0.05] transition-all resize-y"
               placeholder="Escribe el contenido de la publicacion..."
               required
             />
           </div>
 
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-5">
-            <label className="block text-xs font-medium text-white/50 mb-3">
-              Archivos adjuntos
+          <div className="admin-glass cyber-border rounded-xl p-5">
+            <label className="block text-[10px] font-mono text-white/30 mb-3 uppercase tracking-wider">
+              {"// archivos_adjuntos"}
             </label>
             <FileUploader files={files} onChange={setFiles} />
           </div>
@@ -153,23 +153,26 @@ export default function ContentForm({ initial, mode }: ContentFormProps) {
 
         {/* Sidebar */}
         <div className="flex flex-col gap-4">
-          <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">
-              Configuracion
-            </h3>
+          <div className="admin-glass cyber-border rounded-xl p-5">
+            <div className="flex items-center gap-2.5 mb-5">
+              <div className="w-1.5 h-4 rounded-full bg-[#00ffcc]/30" />
+              <h3 className="text-sm font-semibold text-white/80 font-mono">
+                Configuracion
+              </h3>
+            </div>
 
             <div className="mb-4">
               <label
                 htmlFor="category"
-                className="block text-[11px] font-medium text-white/40 mb-2"
+                className="block text-[10px] font-mono text-white/30 mb-2 uppercase tracking-wider"
               >
-                Categoria
+                {"// categoria"}
               </label>
               <select
                 id="category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#00ffcc]/40 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2.5 text-sm text-white/60 focus:outline-none focus:border-[#00ffcc]/25 transition-all font-mono"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -182,17 +185,17 @@ export default function ContentForm({ initial, mode }: ContentFormProps) {
             <div className="mb-4">
               <label
                 htmlFor="tags"
-                className="block text-[11px] font-medium text-white/40 mb-2"
+                className="block text-[10px] font-mono text-white/30 mb-2 uppercase tracking-wider"
               >
-                Etiquetas (separadas por coma)
+                {"// tags (separadas por coma)"}
               </label>
               <input
                 id="tags"
                 type="text"
                 value={tagsInput}
                 onChange={(e) => setTagsInput(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#00ffcc]/40 transition-colors"
-                placeholder="hacking, seguridad, tutorial"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2.5 text-sm text-white/60 placeholder-white/15 focus:outline-none focus:border-[#00ffcc]/25 transition-all font-mono"
+                placeholder="hacking, seguridad"
               />
             </div>
 
@@ -204,11 +207,11 @@ export default function ContentForm({ initial, mode }: ContentFormProps) {
                   onChange={(e) => setPinned(e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-10 h-5 bg-white/10 border border-white/10 rounded-full peer-checked:bg-[#00ffcc]/20 peer-checked:border-[#00ffcc]/30 transition-colors" />
-                <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white/40 rounded-full transition-all peer-checked:translate-x-5 peer-checked:bg-[#00ffcc]" />
+                <div className="w-10 h-5 bg-white/[0.05] border border-white/[0.06] rounded-full peer-checked:bg-[#00ffcc]/15 peer-checked:border-[#00ffcc]/25 transition-colors" />
+                <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white/20 rounded-full transition-all peer-checked:translate-x-5 peer-checked:bg-[#00ffcc]" style={{ boxShadow: "0 0 6px rgba(0,255,204,0.3)" }} />
               </div>
-              <span className="text-sm text-white/50 group-hover:text-white transition-colors">
-                Fijar publicacion
+              <span className="text-sm text-white/40 group-hover:text-white/60 transition-colors font-mono">
+                fijar_publicacion
               </span>
             </label>
           </div>
@@ -216,25 +219,26 @@ export default function ContentForm({ initial, mode }: ContentFormProps) {
           <button
             type="submit"
             disabled={saving}
-            className="w-full bg-[#00ffcc] text-black font-bold py-3 rounded-xl hover:shadow-lg hover:shadow-[#00ffcc]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#00ffcc]/10 border border-[#00ffcc]/25 text-[#00ffcc] font-mono font-bold py-3 rounded-xl hover:bg-[#00ffcc]/15 hover:border-[#00ffcc]/35 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{ boxShadow: saving ? "none" : "0 0 15px rgba(0,255,204,0.08)" }}
           >
             {saving ? (
               <span className="flex items-center justify-center gap-2">
-                <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-[#00ffcc] border-t-transparent rounded-full animate-spin" />
                 Guardando...
               </span>
             ) : mode === "create" ? (
-              "Publicar"
+              "$ publish"
             ) : (
-              "Actualizar"
+              "$ update"
             )}
           </button>
 
           <a
             href="/admin/content"
-            className="w-full text-center bg-white/5 border border-white/10 text-white/50 font-medium py-3 rounded-xl hover:text-white hover:bg-white/10 transition-all block"
+            className="w-full text-center bg-white/[0.03] border border-white/[0.06] text-white/30 font-mono font-medium py-3 rounded-xl hover:text-white/50 hover:bg-white/[0.05] transition-all block"
           >
-            Cancelar
+            cancelar
           </a>
         </div>
       </div>

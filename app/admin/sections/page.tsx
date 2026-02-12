@@ -77,27 +77,24 @@ export default function SectionsEditorPage() {
         )}
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Editar Secciones</h1>
-            <p className="text-muted-foreground text-sm">Modifica el contenido del sitio web</p>
-          </div>
+          <div />
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-lg font-medium text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
-            style={{ boxShadow: "0 0 15px rgba(0,255,204,0.2)" }}
+            className="flex items-center gap-2 bg-[#00ffcc]/10 border border-[#00ffcc]/20 text-[#00ffcc] px-6 py-2.5 rounded-lg font-medium text-sm hover:bg-[#00ffcc]/15 hover:border-[#00ffcc]/30 transition-all disabled:opacity-50 font-mono"
+            style={{ boxShadow: "0 0 15px rgba(0,255,204,0.08)" }}
           >
             {saving ? (
               <>
-                <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                Guardando...
+                <div className="w-4 h-4 border-2 border-[#00ffcc] border-t-transparent rounded-full animate-spin" />
+                guardando...
               </>
             ) : (
               <>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
                 </svg>
-                Guardar cambios
+                $ save_changes
               </>
             )}
           </button>
@@ -109,10 +106,10 @@ export default function SectionsEditorPage() {
             <button
               key={key}
               onClick={() => setActiveSection(key)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs font-mono font-medium whitespace-nowrap transition-all ${
                 activeSection === key
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-primary/30"
+                  ? "bg-[#00ffcc]/10 text-[#00ffcc] border border-[#00ffcc]/20"
+                  : "bg-white/[0.02] border border-white/[0.06] text-white/30 hover:text-white/60 hover:border-[#00ffcc]/15"
               }`}
             >
               {SECTION_LABELS[key]}
@@ -121,7 +118,7 @@ export default function SectionsEditorPage() {
         </div>
 
         {/* Section editors */}
-        <div className="bg-card border border-border rounded-xl p-6">
+        <div className="admin-glass cyber-border rounded-xl p-6">
           {activeSection === "about" && (
             <AboutEditor
               data={settings.about}
@@ -177,8 +174,8 @@ export default function SectionsEditorPage() {
 }
 
 const inputClass =
-  "w-full bg-accent border border-border rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors";
-const labelClass = "block text-xs font-medium text-muted-foreground mb-1.5";
+  "w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-white/80 placeholder-white/15 focus:outline-none focus:border-[#00ffcc]/25 focus:bg-white/[0.05] transition-all font-mono";
+const labelClass = "block text-[10px] font-mono text-white/30 mb-2 uppercase tracking-wider";
 
 function AboutEditor({
   data,
@@ -220,23 +217,23 @@ function AboutEditor({
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground">Caracteristicas</h3>
+          <h3 className="text-sm font-semibold text-white/80 font-mono">Caracteristicas</h3>
           <button
             type="button"
             onClick={addFeature}
-            className="text-xs text-primary hover:underline"
+            className="text-xs text-[#00ffcc]/60 hover:text-[#00ffcc] font-mono transition-colors"
           >
             + Agregar
           </button>
         </div>
         {data.features.map((feature, i) => (
-          <div key={i} className="bg-accent/50 border border-border rounded-lg p-4 flex flex-col gap-3">
+          <div key={i} className="bg-white/[0.02] border border-white/[0.05] rounded-lg p-4 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Caracteristica {i + 1}</span>
+              <span className="text-[10px] text-white/25 font-mono">Caracteristica {i + 1}</span>
               <button
                 type="button"
                 onClick={() => removeFeature(i)}
-                className="text-xs text-destructive hover:underline"
+                className="text-[10px] text-[#ff4444]/50 hover:text-[#ff4444] font-mono transition-colors"
               >
                 Eliminar
               </button>
@@ -341,16 +338,16 @@ function ChannelsEditor({
         />
       </div>
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground">Enlaces</h3>
-        <button type="button" onClick={addLink} className="text-xs text-primary hover:underline">
+        <h3 className="text-sm font-semibold text-white/80 font-mono">Enlaces</h3>
+        <button type="button" onClick={addLink} className="text-[10px] text-[#00ffcc]/50 hover:text-[#00ffcc] font-mono transition-colors">
           + Agregar
         </button>
       </div>
       {data.links.map((link, i) => (
-        <div key={i} className="bg-accent/50 border border-border rounded-lg p-4 flex flex-col gap-3">
+        <div key={i} className="bg-white/[0.02] border border-white/[0.05] rounded-lg p-4 flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">Canal {i + 1}</span>
-            <button type="button" onClick={() => removeLink(i)} className="text-xs text-destructive hover:underline">
+            <span className="text-[10px] text-white/25 font-mono">Canal {i + 1}</span>
+            <button type="button" onClick={() => removeLink(i)} className="text-[10px] text-[#ff4444]/50 hover:text-[#ff4444] font-mono transition-colors">
               Eliminar
             </button>
           </div>
@@ -443,14 +440,14 @@ function RdpVpsEditor({
         <textarea value={data.description} onChange={(e) => onChange({ ...data, description: e.target.value })} rows={3} className={inputClass + " resize-y"} />
       </div>
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground">Enlaces</h3>
-        <button type="button" onClick={addLink} className="text-xs text-primary hover:underline">+ Agregar</button>
+        <h3 className="text-sm font-semibold text-white/80 font-mono">Enlaces</h3>
+        <button type="button" onClick={addLink} className="text-[10px] text-[#00ffcc]/50 hover:text-[#00ffcc] font-mono transition-colors">+ Agregar</button>
       </div>
       {data.links.map((link, i) => (
-        <div key={i} className="bg-accent/50 border border-border rounded-lg p-4 flex flex-col gap-3">
+        <div key={i} className="bg-white/[0.02] border border-white/[0.05] rounded-lg p-4 flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">Servicio {i + 1}</span>
-            <button type="button" onClick={() => removeLink(i)} className="text-xs text-destructive hover:underline">Eliminar</button>
+            <span className="text-[10px] text-white/25 font-mono">Servicio {i + 1}</span>
+            <button type="button" onClick={() => removeLink(i)} className="text-[10px] text-[#ff4444]/50 hover:text-[#ff4444] font-mono transition-colors">Eliminar</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <input type="text" placeholder="Nombre" value={link.name} onChange={(e) => updateLink(i, "name", e.target.value)} className={inputClass} />
@@ -497,14 +494,14 @@ function StatsEditor({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground">Estadisticas</h3>
-        <button type="button" onClick={addItem} className="text-xs text-primary hover:underline">+ Agregar</button>
+        <h3 className="text-sm font-semibold text-white/80 font-mono">Estadisticas</h3>
+        <button type="button" onClick={addItem} className="text-[10px] text-[#00ffcc]/50 hover:text-[#00ffcc] font-mono transition-colors">+ Agregar</button>
       </div>
       {data.items.map((item, i) => (
-        <div key={i} className="bg-accent/50 border border-border rounded-lg p-4 flex flex-col gap-3">
+        <div key={i} className="bg-white/[0.02] border border-white/[0.05] rounded-lg p-4 flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">Estadistica {i + 1}</span>
-            <button type="button" onClick={() => removeItem(i)} className="text-xs text-destructive hover:underline">Eliminar</button>
+            <span className="text-[10px] text-white/25 font-mono">Estadistica {i + 1}</span>
+            <button type="button" onClick={() => removeItem(i)} className="text-[10px] text-[#ff4444]/50 hover:text-[#ff4444] font-mono transition-colors">Eliminar</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input type="text" placeholder="Etiqueta" value={item.label} onChange={(e) => updateItem(i, "label", e.target.value)} className={inputClass} />
@@ -550,14 +547,14 @@ function GalleryEditor({
         <input type="text" value={data.title} onChange={(e) => onChange({ ...data, title: e.target.value })} className={inputClass} />
       </div>
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground">Imagenes</h3>
-        <button type="button" onClick={addImage} className="text-xs text-primary hover:underline">+ Agregar</button>
+        <h3 className="text-sm font-semibold text-white/80 font-mono">Imagenes</h3>
+        <button type="button" onClick={addImage} className="text-[10px] text-[#00ffcc]/50 hover:text-[#00ffcc] font-mono transition-colors">+ Agregar</button>
       </div>
       {data.images.map((img, i) => (
-        <div key={i} className="bg-accent/50 border border-border rounded-lg p-4 flex flex-col gap-3">
+        <div key={i} className="bg-white/[0.02] border border-white/[0.05] rounded-lg p-4 flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">Imagen {i + 1}</span>
-            <button type="button" onClick={() => removeImage(i)} className="text-xs text-destructive hover:underline">Eliminar</button>
+            <span className="text-[10px] text-white/25 font-mono">Imagen {i + 1}</span>
+            <button type="button" onClick={() => removeImage(i)} className="text-[10px] text-[#ff4444]/50 hover:text-[#ff4444] font-mono transition-colors">Eliminar</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input type="url" placeholder="URL de la imagen" value={img.url} onChange={(e) => updateImage(i, "url", e.target.value)} className={inputClass} />
@@ -610,17 +607,17 @@ function DownloadsEditor({
         <textarea value={data.description} onChange={(e) => onChange({ ...data, description: e.target.value })} rows={2} className={inputClass + " resize-y"} />
       </div>
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground">Archivos de descarga</h3>
-        <button type="button" onClick={addFile} className="text-xs text-primary hover:underline">+ Agregar</button>
+        <h3 className="text-sm font-semibold text-white/80 font-mono">Archivos de descarga</h3>
+        <button type="button" onClick={addFile} className="text-[10px] text-[#00ffcc]/50 hover:text-[#00ffcc] font-mono transition-colors">+ Agregar</button>
       </div>
-      <p className="text-xs text-muted-foreground">
+      <p className="text-[10px] text-white/25 font-mono">
         Puedes subir archivos (APK, ZIP, etc.) desde la seccion &quot;Archivos&quot; del menu y luego pegar aqui la URL del archivo subido.
       </p>
       {data.files.map((file, i) => (
-        <div key={i} className="bg-accent/50 border border-border rounded-lg p-4 flex flex-col gap-3">
+        <div key={i} className="bg-white/[0.02] border border-white/[0.05] rounded-lg p-4 flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">Archivo {i + 1}</span>
-            <button type="button" onClick={() => removeFile(i)} className="text-xs text-destructive hover:underline">Eliminar</button>
+            <span className="text-[10px] text-white/25 font-mono">Archivo {i + 1}</span>
+            <button type="button" onClick={() => removeFile(i)} className="text-[10px] text-[#ff4444]/50 hover:text-[#ff4444] font-mono transition-colors">Eliminar</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input type="text" placeholder="Nombre del archivo" value={file.name} onChange={(e) => updateFile(i, "name", e.target.value)} className={inputClass} />

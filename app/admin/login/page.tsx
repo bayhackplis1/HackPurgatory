@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
@@ -8,7 +8,27 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [terminalLines, setTerminalLines] = useState<string[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    const lines = [
+      "$ ssh admin@hackpurgatory.local",
+      "Connecting to HACK [PURGATORY] server...",
+      "Encryption: AES-256-GCM",
+      "Authentication required.",
+    ];
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < lines.length) {
+        setTerminalLines((prev) => [...prev, lines[i]]);
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -38,120 +58,112 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-
       <div className="relative w-full max-w-md mx-4">
         {/* Logo */}
         <div className="text-center mb-8 animate-fade-in">
-          <img
-            src="/data/logo.png"
-            alt="HACK PURGATORY"
-            className="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-primary"
-            style={{ boxShadow: "0 0 30px rgba(0,255,204,0.3)" }}
-          />
-          <h1 className="text-2xl font-bold text-foreground tracking-wider">
-            PANEL ADMIN
+          <div className="relative inline-block">
+            <img
+              src="/data/logo.png"
+              alt="HACK PURGATORY"
+              className="w-20 h-20 mx-auto mb-5 rounded-xl border border-[#00ffcc]/20"
+              style={{ boxShadow: "0 0 30px rgba(0,255,204,0.12)" }}
+            />
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#00ffcc] border-3 border-[#0a0a0a]" style={{ boxShadow: "0 0 8px rgba(0,255,204,0.5)" }} />
+          </div>
+          <h1 className="text-xl font-bold text-white/90 tracking-wider font-mono">
+            {"ADMIN TERMINAL"}
           </h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            {"HACK [PURGATORY]"}
+          <p className="text-white/25 text-xs mt-1.5 font-mono">
+            {"HACK [PURGATORY] // Acceso restringido"}
           </p>
+        </div>
+
+        {/* Terminal output */}
+        <div className="mb-4 px-4 py-3 rounded-lg bg-black/50 border border-[#00ffcc]/8 font-mono text-[11px] overflow-hidden animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          {terminalLines.map((line, i) => (
+            <div key={i} className={`${i === 0 ? "text-[#00ffcc]/60" : "text-white/25"} leading-relaxed`}>
+              {line}
+            </div>
+          ))}
+          <div className="flex items-center gap-1 mt-1">
+            <span className="text-[#00ffcc]/40">{">"}</span>
+            <span className="text-white/30">_</span>
+            <span className="w-1.5 h-3.5 bg-[#00ffcc]/50 animate-terminal-blink" />
+          </div>
         </div>
 
         {/* Login form */}
         <form
           onSubmit={handleLogin}
-          className="border border-border rounded-xl p-8 backdrop-blur-xl animate-fade-in"
-          style={{
-            animationDelay: "0.2s",
-            boxShadow: "0 0 40px rgba(0,255,204,0.05)",
-            backgroundColor: "rgba(0,0,0,0.7)",
-          }}
+          className="admin-glass cyber-border rounded-xl p-6 animate-fade-in"
+          style={{ animationDelay: "0.3s" }}
         >
-          <div className="mb-6">
+          <div className="mb-5">
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-muted-foreground mb-2"
+              className="block text-[10px] font-mono text-white/30 mb-2 uppercase tracking-wider"
             >
-              Usuario
+              {"// usuario"}
             </label>
             <input
               id="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full bg-accent border border-border rounded-lg px-4 py-3 text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-              placeholder="Ingresa tu usuario"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-white/80 placeholder-white/15 focus:outline-none focus:border-[#00ffcc]/25 focus:bg-white/[0.05] transition-all font-mono text-sm"
+              placeholder="root"
               required
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-5">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-muted-foreground mb-2"
+              className="block text-[10px] font-mono text-white/30 mb-2 uppercase tracking-wider"
             >
-              Contrasena
+              {"// contrasena"}
             </label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-accent border border-border rounded-lg px-4 py-3 text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-              placeholder="Ingresa tu contrasena"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-white/80 placeholder-white/15 focus:outline-none focus:border-[#00ffcc]/25 focus:bg-white/[0.05] transition-all font-mono text-sm"
+              placeholder="********"
               required
             />
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-destructive/10 border border-destructive/30 rounded-lg text-destructive text-sm text-center">
-              {error}
+            <div className="mb-4 p-3 bg-[#ff4444]/[0.06] border border-[#ff4444]/15 rounded-lg text-[#ff4444]/80 text-xs text-center font-mono">
+              {"[ERROR] "}{error}
             </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-lg hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#00ffcc]/10 border border-[#00ffcc]/25 text-[#00ffcc] font-mono font-bold py-3 rounded-lg hover:bg-[#00ffcc]/15 hover:border-[#00ffcc]/35 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             style={{
-              boxShadow: loading
-                ? "none"
-                : "0 0 20px rgba(0,255,204,0.3)",
+              boxShadow: loading ? "none" : "0 0 20px rgba(0,255,204,0.08)",
             }}
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
-                <svg
-                  className="animate-spin h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-                Accediendo...
+                <div className="w-4 h-4 border-2 border-[#00ffcc] border-t-transparent rounded-full animate-spin" />
+                Autenticando...
               </span>
             ) : (
-              "Acceder"
+              "$ sudo login"
             )}
           </button>
 
-          <div className="mt-6 text-center">
+          <div className="mt-5 text-center">
             <a
               href="/"
-              className="text-muted-foreground text-sm hover:text-primary transition-colors"
+              className="text-white/20 text-xs font-mono hover:text-[#00ffcc]/50 transition-colors"
             >
-              Volver al sitio
+              {"< volver_al_sitio"}
             </a>
           </div>
         </form>
